@@ -80,7 +80,9 @@ def progress_hook(d, download_id):
     """Hook to track download progress"""
     if d['status'] == 'downloading':
         download_progress[download_id]['status'] = 'downloading'
-        download_progress[download_id]['filename'] = d.get('filename', 'Unknown')
+        # Extract just the filename, not the full path
+        full_path = d.get('filename', 'Unknown')
+        download_progress[download_id]['filename'] = os.path.basename(full_path)
         
         # Calculate progress
         if 'total_bytes' in d:
@@ -105,7 +107,9 @@ def progress_hook(d, download_id):
     elif d['status'] == 'finished':
         download_progress[download_id]['status'] = 'processing'
         download_progress[download_id]['progress'] = 100
-        download_progress[download_id]['filename'] = d.get('filename', 'Unknown')
+        # Extract just the filename, not the full path
+        full_path = d.get('filename', 'Unknown')
+        download_progress[download_id]['filename'] = os.path.basename(full_path)
     
     elif d['status'] == 'error':
         download_progress[download_id]['status'] = 'error'
