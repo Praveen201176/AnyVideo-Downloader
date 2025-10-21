@@ -24,13 +24,14 @@ COPY . .
 # Create downloads directory
 RUN mkdir -p downloads
 
-# Expose port (Wispbyte will set this)
+# Expose port (Railway/Cloud platforms will set PORT env var)
 EXPOSE 5000
 
 # Set environment variables
 ENV FLASK_APP=app.py
 ENV PYTHONUNBUFFERED=1
 ENV FLASK_ENV=production
+ENV PORT=5000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
