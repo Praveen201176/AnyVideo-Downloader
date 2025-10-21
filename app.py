@@ -627,8 +627,8 @@ def download_file(filename):
 
 def cleanup_old_downloads():
     """
-    Delete downloads older than 30 seconds to prevent storage bloat
-    Perfect for free hosting services - files auto-delete after download
+    Delete downloads older than 10 minutes to prevent storage bloat
+    Perfect for free hosting services - gives users time to download
     """
     try:
         current_time = time.time()
@@ -637,10 +637,10 @@ def cleanup_old_downloads():
         for filename in os.listdir(DOWNLOAD_FOLDER):
             filepath = os.path.join(DOWNLOAD_FOLDER, filename)
             
-            # Check if file is older than 30 seconds
+            # Check if file is older than 10 minutes (600 seconds)
             if os.path.isfile(filepath):
                 file_age = current_time - os.path.getmtime(filepath)
-                if file_age > 30:  # 30 seconds
+                if file_age > 600:  # 10 minutes - enough time for downloads
                     try:
                         os.remove(filepath)
                         cleanup_count += 1
