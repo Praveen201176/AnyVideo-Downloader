@@ -592,15 +592,39 @@ def supported_sites():
     sites = [
         'YouTube', 'Vimeo', 'TikTok', 'Twitter/X', 'Instagram', 'Facebook',
         'Dailymotion', 'Twitch', 'Reddit', 'SoundCloud', 'Bandcamp',
-        'VK', 'Rumble', 'Odysee', 'Bilibili', 'Niconico', 'Archive.org',
+        'VK', 'Rumble', 'Odysoe', 'Bilibili', 'Niconico', 'Archive.org',
         'And 1000+ more sites...'
     ]
     return jsonify(sites)
 
+@app.route('/api/file/<path:filename>', methods=['GET'])
+@limiter.limit("20 per minute")
+@secure_headers()
+def download_file(filename):
+    """Serve downloaded file to user's browser"""
+    try:
+        # Security: prevent directory traversal
+        filename = os.path.basename(filename)
+        filepath = os.path.join(DOWNLOAD_FOLDER, filename)
+        
+        # Check if file exists
+        if not os.path.exists(filepath):
+            return jsonify({'error': 'File not found'}), 404
+        
+        # Send file to browser with download prompt
+        return send_file(
+            filepath,
+            as_attachment=True,
+            download_name=filename
+        )
+    except Exception as e:
+        print(f"⚠️ Error serving file {filename}: {e}")
+        return jsonify({'error': str(e)}), 500
+
 def cleanup_old_downloads():
     """
-    Delete downloads older than 1 hour to prevent storage bloat
-    Perfect for free hosting services like Wispbyte
+    Delete downloads older than 30 seconds to prevent storage bloat
+    Perfect for free hosting services - files auto-delete after download
     """
     try:
         current_time = time.time()
@@ -609,10 +633,10 @@ def cleanup_old_downloads():
         for filename in os.listdir(DOWNLOAD_FOLDER):
             filepath = os.path.join(DOWNLOAD_FOLDER, filename)
             
-            # Check if file is older than 1 hour (3600 seconds)
+            # Check if file is older than 30 seconds
             if os.path.isfile(filepath):
                 file_age = current_time - os.path.getmtime(filepath)
-                if file_age > 3600:  # 1 hour
+                if file_age > 30:  # 30 seconds
                     try:
                         os.remove(filepath)
                         cleanup_count += 1
@@ -626,10 +650,10 @@ def cleanup_old_downloads():
         print(f"⚠️ Cleanup error: {e}")
 
 def schedule_cleanup():
-    """Schedule cleanup to run every hour"""
+    """Schedule cleanup to run every 30 seconds"""
     cleanup_old_downloads()
     from threading import Timer
-    Timer(3600, schedule_cleanup).start()  # Run every hour
+    Timer(30, schedule_cleanup).start()  # Run every 30 seconds
 
 if __name__ == '__main__':
     # Print banner

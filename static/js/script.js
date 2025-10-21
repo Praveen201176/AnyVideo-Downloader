@@ -304,8 +304,20 @@ async function checkProgress() {
         // Handle completion
         if (data.status === 'completed') {
             stopProgressCheck();
-            showSuccess('Download completed successfully!');
+            showSuccess('Download completed! File is downloading to your computer...');
             loadHistory();
+            
+            // Trigger browser download
+            if (data.filename) {
+                // Create a temporary link to trigger download
+                const downloadLink = document.createElement('a');
+                downloadLink.href = `/api/file/${encodeURIComponent(data.filename)}`;
+                downloadLink.download = data.filename;
+                downloadLink.style.display = 'none';
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            }
             
             // Reset UI
             setTimeout(() => {
