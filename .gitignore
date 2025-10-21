@@ -97,8 +97,8 @@ WISPBYTE_DEPLOYMENT.md
 test_security.py
 enable_cloudflare.py
 
-# Unused deployment configs
-railway.json
+# Unused deployment configs (railway.json is needed for Railway!)
+# railway.json - REMOVED from gitignore, needed for deployment
 render.yaml
 vercel.json
 env.example.txt
