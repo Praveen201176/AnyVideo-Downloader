@@ -1,0 +1,104 @@
+# AnyVideo Downloader - Git Ignore
+# Developer: dr1p7.steez
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Flask
+instance/
+.webassets-cache
+
+# Downloads folder
+downloads/
+*.mp4
+*.mp3
+*.mkv
+*.webm
+*.m4a
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Environment
+.env
+.flaskenv
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Security - Never commit these!
+*.key
+*.pem
+*.crt
+secrets/
+credentials/
+
+# Excluded documentation (storage optimization)
+# Keep only README.md and DEPLOYMENT_SUMMARY.md
+API.md
+BYPASS_FEATURES.md
+CHANGELOG.md
+CLOUDFLARE_BYPASS.md
+CONTRIBUTING.md
+COOKIE_GUIDE.md
+DEPLOYMENT_GUIDE.md
+DRM_EXPLANATION.md
+FEATURES.md
+PROJECT_OVERVIEW.md
+PROJECT_SUMMARY.md
+QUICKSTART.md
+SECURITY_FEATURES.md
+SETUP_INSTRUCTIONS.md
+TESTING.md
+TROUBLESHOOTING_SITES.md
+TWITTER_X_GUIDE.md
+WISPBYTE_DEPLOYMENT.md
+
+# Batch files (Windows only)
+*.bat
+
+# Utility scripts
+test_security.py
+enable_cloudflare.py
+
+# Unused deployment configs
+railway.json
+render.yaml
+vercel.json
+env.example.txt

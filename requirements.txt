@@ -1,0 +1,10 @@
+flask==3.0.0
+flask-cors==4.0.0
+yt-dlp==2024.10.7
+gunicorn==21.2.0
+requests>=2.32.2
+curl-cffi>=0.5.10
+Flask-Limiter==3.5.0
+Flask-Talisman==1.1.0
+bleach==6.1.0
+
